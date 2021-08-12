@@ -1,0 +1,245 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{capt-of}
+\usepackage[american]{babel}
+\usepackage{csquotes}
+\usepackage[style=ieee,backend=biber]{biblatex}
+\usepackage{tikz}
+\usepackage{mathrsfs}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\let\oldfootnoterule\footnoterule
+\def\footnoterule{\only<2->\oldfootnoterule}
+
+\DeclareLanguageMapping{american}{american-apa}
+\addbibresource{biblio.bib}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+
+%------------------------------------------------------------
+%This block of code defines the information to appear in the
+%Title page
+\title[What Are Random Variables?] %optional
+{What Are Random Variables?}
+
+% \subtitle{}
+
+\author[R. Mok] % (optional)
+{R.~Mok BSc(AdvMath), MTeach, GradCertDS}
+
+\date[November 2021] % (optional)
+{AISNSW Focus Day, November 2021}
+
+% \logo{\includegraphics[height=1cm]{overleaf-logo}}
+
+%End of title page configuration block
+%------------------------------------------------------------
+
+
+
+%------------------------------------------------------------
+%The next block of commands puts the table of contents at the
+%beginning of each section and highlights the current section:
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+%------------------------------------------------------------
+
+
+\begin{document}
+
+%The next statement creates the title page.
+\frame{\titlepage}
+
+
+%---------------------------------------------------------
+%This block of code is for the table of contents after
+%the title page
+\begin{frame}
+\frametitle{Table of Contents}
+\tableofcontents
+\end{frame}
+%---------------------------------------------------------
+
+\section{Purpose of Presentation}
+
+%---------------------------------------------------------
+
+\begin{frame}
+\frametitle{Purpose of Presentation}
+\begin{block}{Purpose of Presentation}
+\begin{itemize}
+  \item<2-> The purpose of this presentation is to cultivate a \emph{conceptual understanding} of what Random Variables are.
+  \item<3-> This presentation will not concentrate on methods of computation with Random Variables.
+  \item<4-> Why? Analogous to being able to \emph{compute} derivatives vs. \emph{understanding} derivatives, a deeper understanding of Random Variables enhances one's appreciation for the computations and applications.
+  \item<5-> As a result, some of the material in this presentation is not in the Syllabus, or expands/corrects some concepts in the Syllabus.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Quote from Terence Tao}
+\begin{block}{}
+  There is a certain philosophical satisfaction in knowing \emph{why} things work, but a pragmatic person may argue that one only needs to know \emph{how} things work to do real-life problems. The calculus training you receive in introductory classes is certainly adequate for you to begin solving many problems... and you can certainly use things like the chain rule, L'H\^{o}pital's rule, or integration by parts without knowing why these rules work, or whether there are exceptions to these rules. However, one can get into trouble if one applies rules without knowing where they came from and what the limits of their applicability are.
+  % Page 2-3 Analysis I
+\end{block}
+\end{frame}
+
+%---------------------------------------------------------
+
+\section{Set and Function Preliminaries}
+
+%---------------------------------------------------------
+
+\begin{frame}
+  \frametitle{Preliminaries}
+  \begin{block}{Sets}
+    A set is a collection of distinct objects. e.g. $A = \{1,2,a,\mbox{Dave}\}$, or $B = \{c, 2, \pi, \mathbb{H}, \mathfrak{g}\}$.
+  \end{block}
+  Recall the set operations:
+  \begin{itemize}
+    \item Union: $A \cup B = \{1,2,a,c,\pi,\mathbb{H},\mathfrak{g},\mbox{Dave}\}$
+    \item Intersection: $A \cap B = \{2\}$
+  \end{itemize}
+  Recall that a set $C$ is a subset of $A$ if all elements of $C$ are also in $A$, and we write: $C \subseteq A$. Example: $\{1,\mbox{Dave}\}\subseteq A$.
+\end{frame}
+\begin{frame}
+  \frametitle{Preliminaries}
+  \begin{block}{Function}
+    A function $f$ from a set $A$ into $B$, denoted $f: A \rightarrow B$ assigns to each $a \in A$ an element $f(a) = b \in B$.
+
+    The set $A$ is called the \emph{domain} and the set $B$ is called the \emph{co-domain}.
+
+    The \emph{range} is the set $\{ f(a) | a \in A \}$.
+  \end{block}
+  \begin{example}
+    \begin{center}
+    \begin{tikzpicture}[scale = .4]
+      \draw (-3,-3.5) node {$A$} (3,-3.5) node {$B$};
+      \draw (0,3) node {$f$};
+      \draw (-3,0) ellipse (2 and 3);
+      \draw (-3,1.5) node {$1$} (-3,0.5) node {$2$} (-3, -0.5) node {$a$} (-3,-1.5) node {Dave};
+      \draw (3,2) node {$c$} (3,1) node {$2$} (3, 0) node {$\pi$} (3,-1) node {$\mathbb{H}$} (3,-2) node {$\mathfrak{g}$};
+      \draw (3,0) ellipse (2 and 3);
+      \draw[->] (-2.2,1.5) -- (2.5,2);
+      \draw[->] (-2.2,0.5) -- (2.5,-1.85);
+      \draw[->] (-2.2,-0.5) -- (2.5,1);
+      \draw[->] (-1.8,-1.5) -- (2.5,-2);
+      \pause
+      \draw (12, 1.5) node {Domain: $\{1,2,a,\mbox{Dave}\}$};
+      \draw (12, 0) node {Co-domain: $\{c,2,\pi,\mathbb{H},\mathfrak{g}\}$};
+      \draw (12, -1.5) node {Range: $\{c, 2, \mathfrak{g}\}$};
+    \end{tikzpicture}
+  \end{center}
+  \end{example}
+\end{frame}
+
+% --------------------------------------------------------
+
+\section{Probability Concepts as Sets}
+
+% --------------------------------------------------------
+
+\begin{frame}
+  \frametitle{Sample Space}
+  \begin{block}{Sample Space}
+    The Sample Space is the set of all possible outcomes, denoted $\Omega$.
+  \end{block}
+  \begin{example}
+    Consider the coloured spinner:
+    \begin{center}
+    \begin{tikzpicture}
+      \draw[fill=blue] (0,0) -- (1,0) arc (0:90:1) -- cycle;
+      \draw[fill=red] (0,0) -- (1,0) arc (0:{-135/2}:1) -- cycle;
+      \draw[fill=red] (0,0) -- ({cos(-135/2)},{sin(-135/2)}) arc ({-135/2}: -135: 1) -- cycle;
+      \draw[fill=green] (0,0) -- (0,1) arc (90:225:1) -- cycle;
+      \draw[ultra thick, ->, black, opacity = 0.6] (0,0) -- ({0.9*cos(-24)}, {0.9*sin(-24)});
+      \draw[fill=black] (0,0) circle (0.05);
+      \draw ({0.5*cos(45)}, {0.5*sin(45)}) node {$B$};
+      \draw ({0.5*cos(-135/4)}, {0.5*sin(-135/4)}) node {$R$};
+      \draw ({0.5*cos(-135/4*3)}, {0.5*sin(-135/4*3)}) node {$R$};
+      \draw ({0.5*cos((90+225)/2)}, {0.5*sin((90+225)/2)}) node {$G$};
+    \end{tikzpicture}
+    \end{center}
+    What is the sample space?
+    \pause
+    $\Omega = \{B, G, R\}$
+
+    \pause
+    It could also be: $\Omega = [0, 2\pi)$
+  \end{example}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Events and Event Spaces}
+  \begin{block}{Event}
+    An Event is a subset of the Sample Space.
+  \end{block}
+  \begin{example}
+  The set $E = \{2,4,6\}$ would represent the Event of rolling even numbers on a 6-sided die with sample space $\Omega = \{1,2,3,4,5,6\}$.
+  \end{example}
+\end{frame}
+\begin{frame}
+  \begin{block}{Event Space}
+    An Event Space (also known as a sigma-field), $\mathscr{F}$, is the set of all possible Events that one can find the probability for.
+  \end{block}
+  \begin{example}
+    Continuing with the running example of the spinner on the previous slide, the Event Space would be:
+
+    \begin{itemize}
+      \item $\mathscr{F} = \{\{\}, \{B\}, \{G\}, \{R\}, \{B,G\}, \{B,R\}, \{G, R\}, \{B, G, R\}\}$
+    \pause
+
+      \item What would $\mathscr{F}$ be if the Sample Space was $[0,2\pi)$? (Not in the scope of today's presentation - open for questions at the end of the presentation)
+    \end{itemize}
+  \end{example}
+\end{frame}
+\begin{frame}
+  \frametitle{Probability Measure}
+  \begin{block}{Probability Measure}
+    The probability of an Event $E$, denoted $P(E)$, is a function $P: \mathscr{F} \rightarrow [0,1]$, and:
+    \begin{itemize}
+      \item For all $n \in \mathbb{N}$, if the events $E_1, E_2, \ldots, E_n \in \mathscr{F}$ are disjoint (i.e. they all have empty intersection), then $P(E_1 \cup E_2 \cup \ldots E_n) = P(E_1) + P(E_2) + \ldots + P(E_n)$.
+      \item $P(\Omega) = 1$
+    \end{itemize}
+  \end{block}
+  \begin{example}
+    Continuing with the running example of the spinner with sample space $\Omega = \{B, G, R\}$, we can measure the probability of the Events with the following function:
+
+    $P(\{\}) = 0$, $P(\{B\}) = \frac{1}{4}$, $P(\{G\}) = \frac{3}{8}$, $P(\{R\}) = \frac{3}{8}$. The probability of the other events can be found using the first property listed above.
+  \end{example}
+\end{frame}
+% \pause
+% ... such as:
+% \begin{block}{De Moivre's Theorem Restated}
+%   \[(e^{ix})^n = e^{inx}\]
+%   with the same discussions about $n$ as in the previous section.
+% \end{block}
+% \end{frame}
+
+% --------------------------------------------------------
+
+\section{Bibliography}
+
+% --------------------------------------------------------
+
+\begin{frame}
+  \frametitle{Bibliography}
+  \printbibliography
+
+  Source files and PDF for this presentation can be found on:
+  \url{https://github.com/moksifu/aisnsw_focus_day_2021}
+  under the MIT Licence.
+\end{frame}
+
+
+%---------------------------------------------------------
+
+
+\end{document}
