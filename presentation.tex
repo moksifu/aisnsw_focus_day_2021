@@ -3,7 +3,7 @@
 \usepackage{capt-of}
 \usepackage[american]{babel}
 \usepackage{csquotes}
-\usepackage[style=ieee,backend=biber]{biblatex}
+\usepackage[style=apa,backend=biber]{biblatex}
 \usepackage{tikz}
 \usepackage{mathrsfs}
 
@@ -20,8 +20,8 @@
 %------------------------------------------------------------
 %This block of code defines the information to appear in the
 %Title page
-\title[What Are Random Variables?] %optional
-{What Are Random Variables?}
+\title[Defining Random Variables] %optional
+{Defining Random Variables}
 
 % \subtitle{}
 
@@ -73,20 +73,44 @@
 
 \begin{frame}
 \frametitle{Purpose of Presentation}
-\begin{block}{Purpose of Presentation}
+\begin{block}{The Problem}
 \begin{itemize}
-  \item<2-> The purpose of this presentation is to cultivate a \emph{conceptual understanding} of what Random Variables are.
-  \item<3-> This presentation will not concentrate on methods of computation with Random Variables.
-  \item<4-> Why? Analogous to being able to \emph{compute} derivatives vs. \emph{understanding} derivatives, a deeper understanding of Random Variables enhances one's appreciation for the computations and applications.
-  \item<5-> As a result, some of the material in this presentation is not in the Syllabus, or expands/corrects some concepts in the Syllabus.
+  \item<2-> The Syllabus attempts to define a random variable in terms of what it tries to achieve/model but doesn't actually define what it is:
+    \begin{itemize}
+      \item Define and categorise random variables
+        \begin{itemize}
+          \item know that a random variable describes some aspect in a population from which samples can be drawn
+          \item know the difference between a discrete random variable and a continuous random variable
+        \end{itemize}
+    \end{itemize}
+    \parencite[p.~47]{syllabus}
+  \item<3-> The Syllabus glossary isn't a great definition at all:
+    \begin{itemize}
+      \item A random variable is a variable whose possible values are outcomes of a statistical experiment or random phenomenon.
+        \parencite[p.~73]{syllabus}
+    \end{itemize}
+  \item<4-> The Cambridge Textbook just gives an \emph{example} of a random variable that models tossing 4 coins.
+  \item<5-> It seems like no one really knows what a Random Variable is.
 \end{itemize}
 \end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{Quote from Terence Tao}
-\begin{block}{}
-  There is a certain philosophical satisfaction in knowing \emph{why} things work, but a pragmatic person may argue that one only needs to know \emph{how} things work to do real-life problems. The calculus training you receive in introductory classes is certainly adequate for you to begin solving many problems... and you can certainly use things like the chain rule, L'H\^{o}pital's rule, or integration by parts without knowing why these rules work, or whether there are exceptions to these rules. However, one can get into trouble if one applies rules without knowing where they came from and what the limits of their applicability are.
+\frametitle{Purpose of Presentation}
+\begin{block}{Purpose}
+  \begin{itemize}
+    \item<2-> Define probability concepts properly such as Random Variables.
+    \item<3-> This presentation will not concentrate on methods of computation with Random Variables.
+    \item<4-> Why? Analogous to being able to \emph{compute} derivatives vs. \emph{understanding} derivatives, a deeper understanding of Random Variables enhances one's appreciation for the computations and applications.
+    \item<5-> As a result, some of the material in this presentation is not in the Syllabus, or expands/corrects some concepts in the Syllabus.
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Purpose of Presentation}
+\begin{block}{\parencite[pp.~2-3]{analysis_tao}}
+  There is a certain philosophical satisfaction in knowing \emph{why} things work... you can certainly use things like the chain rule, L'H\^{o}pital's rule, or integration by parts without knowing why these rules work, or whether there are exceptions to these rules. However, one can get into trouble if one applies rules without knowing where they came from and what the limits of their applicability are.
   % Page 2-3 Analysis I
 \end{block}
 \end{frame}
@@ -140,6 +164,21 @@
   \end{example}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Preliminaries}
+  \begin{block}{Countable and Uncountable Sets}
+    Two types of size (or cardinality) of sets that one encounters in mathematics are:
+    \begin{itemize}
+      \item Countable: elements in a countable set can be listed (enumerated), e.g the set of integers $\mathbb{Z}$, the set of rational numbers $\mathbb{Q}$, any finite set.
+      \item Uncountable: elements in an uncountable set cannot be listed (enumerated). e.g. the set of real numbers $\mathbb{R}$, the real interval $[0,1]$.
+    \end{itemize}
+    \begin{center}
+      $n(\mathbb{Z}) = n(\mathbb{Q}) < n(\mathbb{R})$
+    \end{center}
+
+  \end{block}
+\end{frame}
+
 % --------------------------------------------------------
 
 \section{Probability Concepts as Sets}
@@ -148,8 +187,8 @@
 
 \begin{frame}
   \frametitle{Sample Space}
-  \begin{block}{Sample Space}
-    The Sample Space is the set of all possible outcomes, denoted $\Omega$.
+  \begin{block}{Sample Space \parencite[p.~192]{measure_tao}}
+    The Sample Space is the set of all possible states that a random system could be in, denoted $\Omega$.
   \end{block}
   \begin{example}
     Consider the coloured spinner:
@@ -159,7 +198,7 @@
       \draw[fill=red] (0,0) -- (1,0) arc (0:{-135/2}:1) -- cycle;
       \draw[fill=red] (0,0) -- ({cos(-135/2)},{sin(-135/2)}) arc ({-135/2}: -135: 1) -- cycle;
       \draw[fill=green] (0,0) -- (0,1) arc (90:225:1) -- cycle;
-      \draw[ultra thick, ->, black, opacity = 0.6] (0,0) -- ({0.9*cos(-24)}, {0.9*sin(-24)});
+      \draw[ultra thick, ->, black, opacity = 0.7] (0,0) -- ({0.9*cos(-24)}, {0.9*sin(-24)});
       \draw[fill=black] (0,0) circle (0.05);
       \draw ({0.5*cos(45)}, {0.5*sin(45)}) node {$B$};
       \draw ({0.5*cos(-135/4)}, {0.5*sin(-135/4)}) node {$R$};
@@ -178,7 +217,7 @@
 
 \begin{frame}
   \frametitle{Events and Event Spaces}
-  \begin{block}{Event}
+  \begin{block}{Event \parencite[p.~192]{measure_tao}}
     An Event is a subset of the Sample Space.
   \end{block}
   \begin{example}
@@ -186,8 +225,8 @@
   \end{example}
 \end{frame}
 \begin{frame}
-  \begin{block}{Event Space}
-    An Event Space (also known as a sigma-field), $\mathscr{F}$, is the set of all possible Events that one can find the probability for.
+  \begin{block}{Event Space \parencite[p.~192]{measure_tao}}
+    An Event Space (also known as a sigma-field), $\mathscr{F}$, is the set of all possible Events that one can measure the probability of.
   \end{block}
   \begin{example}
     Continuing with the running example of the spinner on the previous slide, the Event Space would be:
@@ -202,10 +241,11 @@
 \end{frame}
 \begin{frame}
   \frametitle{Probability Measure}
-  \begin{block}{Probability Measure}
+  \begin{block}{Probability Measure \parencite[p.~10]{daners}}
     The probability of an Event $E$, denoted $P(E)$, is a function $P: \mathscr{F} \rightarrow [0,1]$, and:
     \begin{itemize}
       \item For all $n \in \mathbb{N}$, if the events $E_1, E_2, \ldots, E_n \in \mathscr{F}$ are disjoint (i.e. they all have empty intersection), then $P(E_1 \cup E_2 \cup \ldots E_n) = P(E_1) + P(E_2) + \ldots + P(E_n)$.
+      \item $P(\{\}) = 0$
       \item $P(\Omega) = 1$
     \end{itemize}
   \end{block}
@@ -215,13 +255,33 @@
     $P(\{\}) = 0$, $P(\{B\}) = \frac{1}{4}$, $P(\{G\}) = \frac{3}{8}$, $P(\{R\}) = \frac{3}{8}$. The probability of the other events can be found using the first property listed above.
   \end{example}
 \end{frame}
-% \pause
-% ... such as:
-% \begin{block}{De Moivre's Theorem Restated}
-%   \[(e^{ix})^n = e^{inx}\]
-%   with the same discussions about $n$ as in the previous section.
-% \end{block}
-% \end{frame}
+
+\begin{frame}
+  \frametitle{Summary So Far}
+  \begin{block}{Summary So Far}
+    \begin{itemize}
+      \item Sets
+      \item Functions $f: A \rightarrow B$, domain, co-domain, range
+      \item Countable and Uncountable sets
+      \item Sample Space $\Omega$
+      \item Event Space $\mathscr{F}$
+      \item Probability Measure $P: \mathscr{F} \rightarrow [0,1]$
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+% --------------------------------------------------------
+
+\section{Random Variables}
+
+% --------------------------------------------------------
+
+\begin{frame}
+  \frametitle{Random Variables}
+  \begin{alertblock}{Random Variable \parencite[p.~143]{daners}}
+    A random variable $X$ is a \emph{function} $X: \Omega \rightarrow \mathbb{R}$.
+  \end{alertblock}
+\end{frame}
 
 % --------------------------------------------------------
 
