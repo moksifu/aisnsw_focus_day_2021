@@ -31,8 +31,6 @@
 \date[November 2021] % (optional)
 {AISNSW Focus Day, November 2021}
 
-% \logo{\includegraphics[height=1cm]{overleaf-logo}}
-
 %End of title page configuration block
 %------------------------------------------------------------
 
@@ -232,10 +230,8 @@
     Continuing with the running example of the spinner on the previous slide, the Event Space would be:
 
     \begin{itemize}
-      \item $\mathscr{F} = \{\{\}, \{B\}, \{G\}, \{R\}, \{B,G\}, \{B,R\}, \{G, R\}, \{B, G, R\}\}$
-    \pause
-
-      \item What would $\mathscr{F}$ be if the Sample Space was $[0,2\pi)$? (Not in the scope of today's presentation - open for questions at the end of the presentation)
+      \item<2-> $\mathscr{F} = \{\{\}, \{B\}, \{G\}, \{R\}, \{B,G\}, \{B,R\}, \{G, R\}, \{B, G, R\}\}$
+      \item<3-> What would $\mathscr{F}$ be if the Sample Space was $[0,2\pi)$? (Not in the scope of today's presentation - open for questions at the end of the presentation)
     \end{itemize}
   \end{example}
 \end{frame}
@@ -244,12 +240,13 @@
   \begin{block}{Probability Measure \parencite[p.~10]{daners}}
     The probability measure of an Event $E$, denoted $P(E)$, is a function $P: \mathscr{F} \rightarrow [0,1]$, and:
     \begin{itemize}
-      \item For all $n \in \mathbb{N}$, if the events $E_1, E_2, \ldots, E_n \in \mathscr{F}$ are disjoint (i.e. they all have empty intersection), then $P(E_1 \cup E_2 \cup \ldots E_n) = P(E_1) + P(E_2) + \ldots + P(E_n)$.
+      \item For all $n \in \mathbb{N}$, if the events $E_1, E_2, \ldots, E_n \in \mathscr{F}$ are disjoint (i.e. they all have empty intersection), then $P(E_1 \cup E_2 \cup \ldots \cup E_n) = P(E_1) + P(E_2) + \ldots + P(E_n)$.
       \item $P(\{\}) = 0$
       \item $P(\Omega) = 1$
     \end{itemize}
   \end{block}
   \begin{example}
+    \pause
     Continuing with the running example of the spinner with sample space $\Omega = \{B, G, R\}$, we can measure the probability of the Events with the following function:
 
     $P(\{\}) = 0$, $P(\{B\}) = \frac{1}{4}$, $P(\{G\}) = \frac{3}{8}$, $P(\{R\}) = \frac{3}{8}$. The probability of the other events can be found using the first property listed above.
@@ -260,12 +257,13 @@
   \frametitle{Summary So Far}
   \begin{block}{Summary So Far}
     \begin{itemize}
-      \item Sets
-      \item Functions $f: A \rightarrow B$, domain, co-domain, range
-      \item Countable and Uncountable sets
-      \item Sample Space $\Omega$
-      \item Event Space $\mathscr{F}$
-      \item Probability Measure $P: \mathscr{F} \rightarrow [0,1]$
+      \item<1-> Sets
+      \item<2-> Functions $f: A \rightarrow B$, domain, co-domain, range
+      \item<3-> Countable and Uncountable sets
+      \item<4-> Sample Space $\Omega$
+      \item<5-> Event Space $\mathscr{F}$
+      \item<6-> Probability Measure $P: \mathscr{F} \rightarrow [0,1]$
+      \item<6-> Note: A lot of references will call the triple $(\Omega, \mathscr{F}, P)$ a Probability Space.
     \end{itemize}
   \end{block}
 \end{frame}
@@ -280,8 +278,103 @@
   \frametitle{Random Variables}
   \begin{alertblock}{Random Variable \parencite[p.~143]{daners}}
     A random variable $X$ is a \emph{function} $X: \Omega \rightarrow \mathbb{R}$.
+    \begin{itemize}
+      \item<2-> $X$ is a \emph{discrete random variable} if and only if the \emph{range} of $X$ is countable.
+      \item<3-> $X$ is a \emph{continuous random variable} if and only if the \emph{range} of $X$ is uncountable.
+    \end{itemize}
   \end{alertblock}
+  \pause\pause\pause
+  \begin{block}{Useful Notation for Random Variables}
+    Some conventional notation:
+    \begin{itemize}
+      \item<5-> $[X = a] = \{\omega \in \Omega | X(\omega) = a\}$
+      \item<6-> $[X < a] = \{\omega \in \Omega | X(\omega) < a\}$
+      \item<7-> $[X > a] = \{\omega \in \Omega | X(\omega) > a\}$
+      \item<8-> $[a < X < b] = \{\omega \in \Omega | a < X(\omega) < b\}$, etc
+    \end{itemize}
+  \end{block}
 \end{frame}
+
+\begin{frame}
+  \frametitle{Example of Discrete Random Variable}
+  \begin{example}
+    \begin{center}
+    \begin{tikzpicture}[scale = 0.9]
+      % draw the spinner
+      \draw[fill=blue] (0,0) -- (1,0) arc (0:90:1) -- cycle;
+      \draw[fill=red] (0,0) -- (1,0) arc (0:{-135/2}:1) -- cycle;
+      \draw[fill=red] (0,0) -- ({cos(-135/2)},{sin(-135/2)}) arc ({-135/2}: -135: 1) -- cycle;
+      \draw[fill=green] (0,0) -- (0,1) arc (90:225:1) -- cycle;
+      \draw[ultra thick, ->, black, opacity = 0.7] (0,0) -- ({0.9*cos(-24)}, {0.9*sin(-24)});
+      \draw[fill=black] (0,0) circle (0.05);
+      \draw ({0.5*cos(45)}, {0.5*sin(45)}) node {$B$};
+      \draw ({0.5*cos(-135/4)}, {0.5*sin(-135/4)}) node {$R$};
+      \draw ({0.5*cos(-135/4*3)}, {0.5*sin(-135/4*3)}) node {$R$};
+      \draw ({0.5*cos((90+225)/2)}, {0.5*sin((90+225)/2)}) node {$G$};
+
+      % draw the random variable as internal diagrams
+      \draw (4.5, 2) node {$X$};
+      \draw (3,-2.3) node {$\Omega$};
+      \draw (6,-2.3) node {$\mathbb{R}$};
+      \draw (3,0) ellipse (1 and 2);
+      \draw (6,0) ellipse (1 and 2);
+      \pause
+      \draw (3,1) node {$B$};
+      \draw (3,0) node {$G$};
+      \draw (3,-1) node {$R$};
+      \pause
+      \draw (6,1.2) node {$\vdots$};
+      \draw (6,0.5) node {$1$};
+      \draw (6,-0.5) node {$4$};
+      \draw (6,-1) node {$\vdots$};
+
+      \draw[->] (3.2, 1) -- (5.7, 0.5);
+      \draw[->] (3.2, 0) -- (5.7, -0.4);
+      \draw[->] (3.2, -1) -- (5.7, -0.6);
+    \end{tikzpicture}
+    \end{center}
+  \end{example}
+  \begin{itemize}
+    \item<4-> Range: $\{1, 4\}$
+    \item<5-> $[X = 4] = \{G, R\}$
+    \item<6-> $[X > -1] = \{B, G, R\}$
+    \item<7-> $[X > 100] = \{\}$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Example of Continuous Random Variable}
+  \begin{example}
+    A machine with a slider moving between the values of $-2$ and $2$ inclusive prints a value equal to the square of where the slider lands.\\
+    \pause
+    $X: [-2, 2] \rightarrow \mathbb{R}$\\
+    $X(\omega) = \omega^2$
+  \end{example}
+  \begin{itemize}
+    \item<3-> Range: $[0,4]$
+    \item<4-> $[X = 4] = \{2, -2\}$
+    \item<5-> $[1 < X \leq 3] = [-\sqrt{3}, -1)\cup(1, \sqrt{3}]$
+  \end{itemize}
+\end{frame}
+
+% --------------------------------------------------------
+
+\section{Finding Probabilities of Random Variables}
+% Finite sample space case -> just list out the probabilities of the singleton sets
+% Infinite sample space case -> introduce concept of cumulative distribution function
+% Mention nominally Radon-Nikodym Theorem that defines probability measure of the sample space via measure on the real numbers and derivative of the cumulative distribution function
+
+% --------------------------------------------------------
+
+\begin{frame}
+  \frametitle{Easy Scenario: Finite Sample Spaces}
+\end{frame}
+
+% --------------------------------------------------------
+
+\section{Application to Questions}
+
+% --------------------------------------------------------
 
 % --------------------------------------------------------
 
