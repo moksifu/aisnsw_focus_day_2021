@@ -98,9 +98,8 @@
 \begin{block}{Purpose}
   \begin{itemize}
     \item<2-> Define probability concepts properly such as Random Variables.
-    \item<3-> This presentation will not concentrate on methods of computation with Random Variables.
-    \item<4-> Why? Analogous to being able to \emph{compute} derivatives vs. \emph{understanding} derivatives, a deeper understanding of Random Variables enhances one's appreciation for the computations and applications.
-    \item<5-> As a result, some of the material in this presentation is not in the Syllabus, or expands/corrects some concepts in the Syllabus.
+    \item<3-> Why? Analogous to being able to \emph{compute} derivatives vs. \emph{understand} derivatives, a deeper understanding of Random Variables enhances one's appreciation for the computations and applications.
+    \item<4-> As a result, some of the material in this presentation is not in the Syllabus, or expands/corrects some concepts in the Syllabus.
   \end{itemize}
 \end{block}
 \end{frame}
@@ -289,8 +288,8 @@
     \begin{itemize}
       \item<5-> $[X = a] = \{\omega \in \Omega | X(\omega) = a\}$
       \item<6-> $[X < a] = \{\omega \in \Omega | X(\omega) < a\}$
-      \item<7-> $[X > a] = \{\omega \in \Omega | X(\omega) > a\}$
-      \item<8-> $[a < X < b] = \{\omega \in \Omega | a < X(\omega) < b\}$, etc
+      \item<7-> $[a < X < b] = \{\omega \in \Omega | a < X(\omega) < b\}$, etc
+      \item<8-> More generally: $[X \in S] = \{\omega \in \Omega | X(\omega) \in S\}$
     \end{itemize}
   \end{block}
 \end{frame}
@@ -357,6 +356,15 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Why Use Random Variables?}
+  \begin{itemize}
+    \item<2-> An advantage of using a Random Variable over just working with Sample Spaces (like in Stage 4 Mathematics) is that it allows us to focus on relevant results in the experiment.
+    \item<3-> In the example of the spinner, let's say spinning a $B$ awards us with \$1 and spinning a $R$ or $G$ awards us with \$4.
+    \item<4-> We don't actually care about getting $B$, $G$ or $R$ - we care about the money!
+  \end{itemize}
+\end{frame}
+
 % --------------------------------------------------------
 
 \section{Finding Probabilities of Random Variables}
@@ -367,7 +375,135 @@
 % --------------------------------------------------------
 
 \begin{frame}
-  \frametitle{Easy Scenario: Finite Sample Spaces}
+  \frametitle{Probability of Random Variables}
+  \begin{itemize}
+    \item<1-> Recall that a probability measure is a function $P: \mathscr{F} \rightarrow [0,1]$ where $\mathscr{F}$ is the set of all possible Events.
+    \item<2-> The notation we introduced earlier, e.g $[X = 4]$ is what we ``sub in'' to this function $P$.
+  \end{itemize}
+  \pause\pause
+  \begin{example}
+    Continuing with the discrete random variable example of the spinner:
+    \[ P([X = 4]) = P(\{G, R\}) \]
+    \pause
+    Conventionally, writing $($ followed by $[$ and remembering to close them off is annoying, so we shorten the left side to just $P(X=4)$.
+    \pause
+    Recall that $P(\{G, R\}) = P(\{G\}) + P(\{R\})$.
+    \pause
+    Hence, $P(X=4) = P(\{G, R\}) = \frac{3}{8} + \frac{3}{8} = \frac{3}{4}$.
+  \end{example}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Probability Distributions}
+  As stated before, Random Variables should just allow us to focus on results in an experiment, without much care about the Sample Space.\\
+  \pause
+  To do this, we can define the Probability Measure to directly interact with the range of the Random Variable (the theory behind how and why this works is beyond the scope of this presentation):
+  \pause
+  \begin{block}{Discrete Random Variable Probabilities}
+    A \emph{Probability Distribution Function} that assigns a probability to each $P(X=k)$ for each $k$ in the range of $X$ is the simplest approach when dealing with Discrete Random Variables.
+  \end{block}
+  \pause
+  \begin{example}
+    As with the spinner, we can measure the probability of the Random Variable with:
+    \begin{tabular}{|c|c|c|c|}\hline
+      $k$ & $1$ & $4$ & Everything else (usually not written)\\ \hline
+      $P(X=k)$ & $\frac{1}{4}$ & $\frac{3}{4}$ & 0\\ \hline
+    \end{tabular}
+  \end{example}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Probability Distributions}
+  \begin{block}{Continuous Random Variable Probabilities}
+    A probability measure for a Continuous Random Variable $X$ can be defined by:
+    \[ P(a < X < b) = \int_a^b f(x)\;dx \]
+    where $f(x)$ is called the \emph{probability density function}.
+  \end{block}
+  Note: $P(X = k) = 0$ for any $k \in \mathbb{R}$
+\end{frame}
+
+\begin{frame}
+  \frametitle{Cumulative Distribution Function}
+  \begin{block}{Cumulative Distribution Function}
+    The Cumulative Distribution Function $F(x)$ of a continuous random variable $X$ with probability density function $f(x)$ is
+    \[ F(x) = P(X < x) = \int_{-\infty}^x f(x)\;dx \]
+    It accumulates the total of probabilities in the distribution.
+  \end{block}
+  \pause
+  This allows us to find quantiles easily. For example the median can be found by solving for $k$ in $F(k) = 0.5$.\\
+  \pause
+  Note also that by the Fundamental Theorem of Calculus, differentiating the cumulative distribution function $F(x)$ will yield the probability density function $f(x)$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Expectation and Variance}
+  Often researchers are interested in finding the average (mean) result of a random phenomenon and the spread of the results.
+  \begin{block}{Expectation}
+    For Discrete Random Variables:
+    \[ \mu = E(X) = \sum_{x \in X} xP(X=x) \]
+    For Continuous Random Variables (Note: \alert{NOT IN SYLLABUS}):
+    \[ \mu = E(X) = \int_{-\infty}^\infty xf(x)\;dx \]
+  \end{block}
+  Note that if $a$ and $b$ are constants: \[E(a+bX) = a + bE(X)\]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Variance}
+  \begin{block}{Variance}
+    \[ Var(X) = E((X-\mu)^2) \]
+    By expanding and simplifying, we can find a simpler formula:
+    \begin{align*}
+      Var(X) & = E(X^2 - 2X\mu +\mu^2)\\
+             & = E(X^2) - E(2X\mu) + E(\mu^2)\\
+             & = E(X^2) - 2\mu E(X) + \mu^2 = E(X^2) - 2\mu^2 + \mu^2\\
+             & = E(X^2) - \mu^2 = E(X^2) - E(X)^2
+    \end{align*}
+  \end{block}
+  \begin{block}{Standard Deviation}
+    Often to \emph{standardise} the squared units of the Variance to units (not squared), the standard deviation is used:
+    \[\sigma = \sqrt{Var(X)}\]
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Important Considerations}
+  \begin{itemize}
+    \item<1-> If $a$ and $b$ are constants: $Var(a + bX) = b^2 Var(X)$ % left as proof for the reader
+    \item<2-> Why $E((X-\mu)^2)$ and not $E(X-\mu)$ to measure spread? % negatives cancelling positives
+    \item<3-> Why not $E(|X-\mu|)$? % mean absolute error, squared is mean squared error - squaring emphasises larger differences, and easier algebra
+    \item<4-> What is the link between mean and variance in Random Variables with the mean and variance used in Statistics? % uniform distribution of data in statistics, identical data tagged as repeats e.g. two data points of 5 could be 5_1 and 5_2
+    % \item<5-> What is the difference between \emph{sample} and \emph{population} standard deviation? Why is sample formula over $n-1$ and population formula over $n$? % Bessel's correction factor
+    % \item<6-> Which do we use in HSC?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Special Distributions Studied in HSC}
+  Some special distributions studied in the HSC are listed below. There is not enough time to cover them in this presentation as they can each take up an entire session in themselves.
+  \begin{itemize}
+    \item<1-> Discrete Probability Distributions
+      \begin{itemize}
+        \item<2-> Discrete Uniform Distribution
+        \item<3-> Bernoulli Distribution $X \sim B(p)$
+        \item<4-> Binomial Distribution $X \sim Bin(n,p)$
+        \item<5-> Not in syllabus but good to look at: Geometric Distribution $X \sim Geo(p)$
+      \end{itemize}
+    \item<6-> Continuous Probability Distributions
+      \begin{itemize}
+        \item<7-> Continuous Uniform Distribution
+        \item<8-> Normal Distribution $X \sim N(\mu, \sigma^2)$
+      \end{itemize}
+    \item<9-> Covered in HSC Science Extension
+      \begin{itemize}
+        \item<9-> $t$ Distribution
+        \item<9-> $\chi^2$ Distribution
+        \item<9-> $F$ Distribution
+      \end{itemize}
+    \item<9-> Not covered in any HSC syllabus but really cool for exploration
+      \begin{itemize}
+        \item<9-> Poisson Distribution
+      \end{itemize}
+  \end{itemize}
 \end{frame}
 
 % --------------------------------------------------------
@@ -375,6 +511,51 @@
 \section{Application to Questions}
 
 % --------------------------------------------------------
+
+\begin{frame}
+  \frametitle{Double Dice}
+  Two 6-sided dice are thrown and the result on the top face are added.
+  \begin{enumerate}
+    \item What is the sample space?
+    \item How can we define a random variable here that is appropriate to the scenario?
+    \item What subset of the sample space does $[X < \pi]$ represent?
+    \item Find $P(X < \pi)$.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{A Geometric Distribution Example}
+  Let $X$ be a random variable that represents the number of tosses of a four-sided die until a 3 is thrown.
+  \begin{enumerate}
+    \item What is the sample space?
+    \item How can we define a random variable that represents the scenario?
+    \item Find $P(X = 1)$, $P(X=2)$, $P(X=x)$.
+    \item Find $E(X)$.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Independent Binomial Probability}
+  John tosses a coin 4 times and independently Paul tosses a coin 4 times.
+  \begin{enumerate}
+    \item How can we define the random variables for John and Paul's results?
+    \item What distribution do these random variables have?
+    \item In random variable notation, how can we represent the probability that they toss the same number of heads?
+    \item Find the probability that they toss the same number of heads.
+  \end{enumerate}
+  Note: for numbers higher than 4, you may need to prove binomial identities such as $\sum_{k=0}^n \binom{n}{k}^2 = \binom{2n}{k}$
+\end{frame}
+
+\begin{frame}
+  \frametitle{Distribution Functions}
+  A continuous random variable is distributed according to the probability density function $f(x)$ such that:
+  \[f(x) = \left \{ \begin{matrix} kx^2+1 \mbox{ if } 0 \leq x \leq 3 \\ 0 \mbox{ otherwise }\end{matrix} \right.\]
+    where $k$ is some constant.
+  \begin{enumerate}
+    \item Find the value of $k$.
+    \item Find the cumulative distribution function.
+  \end{enumerate}
+\end{frame}
 
 % --------------------------------------------------------
 
