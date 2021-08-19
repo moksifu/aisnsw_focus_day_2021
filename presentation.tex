@@ -218,7 +218,7 @@
 \begin{frame}
   \frametitle{Events and Event Spaces}
   \begin{block}{Event \parencite[p.~192]{measure_tao}}
-    An Event is a subset of the Sample Space.
+    An Event, $E$, is a subset of the Sample Space $\Omega$. i.e. $E \subseteq \Omega$.
   \end{block}
   \begin{example}
   The set $E = \{2,4,6\}$ would represent the Event of rolling even numbers on a 6-sided die with sample space $\Omega = \{1,2,3,4,5,6\}$.
@@ -242,7 +242,7 @@
 \begin{frame}
   \frametitle{Probability Measure}
   \begin{block}{Probability Measure \parencite[p.~10]{daners}}
-    The probability of an Event $E$, denoted $P(E)$, is a function $P: \mathscr{F} \rightarrow [0,1]$, and:
+    The probability measure of an Event $E$, denoted $P(E)$, is a function $P: \mathscr{F} \rightarrow [0,1]$, and:
     \begin{itemize}
       \item For all $n \in \mathbb{N}$, if the events $E_1, E_2, \ldots, E_n \in \mathscr{F}$ are disjoint (i.e. they all have empty intersection), then $P(E_1 \cup E_2 \cup \ldots E_n) = P(E_1) + P(E_2) + \ldots + P(E_n)$.
       \item $P(\{\}) = 0$
